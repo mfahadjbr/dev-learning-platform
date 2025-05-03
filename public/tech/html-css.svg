@@ -1,0 +1,10 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100">
+  <g transform="translate(10, 10)">
+    <rect x="0" y="0" width="35" height="40" fill="#E44D26"/>
+    <rect x="45" y="0" width="35" height="40" fill="#0277BD"/>
+    <text x="17" y="25" fill="white" font-family="sans-serif" font-size="12" font-weight="bold">H</text>
+    <text x="62" y="25" fill="white" font-family="sans-serif" font-size="12" font-weight="bold">C</text>
+    <text x="8" y="60" fill="white" font-family="sans-serif" font-size="14" font-weight="bold">HTML</text>
+    <text x="53" y="60" fill="white" font-family="sans-serif" font-size="14" font-weight="bold">CSS</text>
+  </g>
+</svg> 
