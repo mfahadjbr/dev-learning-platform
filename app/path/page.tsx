@@ -484,7 +484,7 @@ export default function AboutPage() {
                   </p>
                   <div className="flex justify-end items-center">
                     <Button className="bg-[#4da8ff] hover:bg-[#3a8ad8] text-black text-sm px-4 py-1 h-auto rounded-md">
-                      <Link href="/learning-path/interview">Take Interview</Link>
+                      <Link href="https://job-interview-application.vercel.app/" target="_blank">Take Interview</Link>
                     </Button>
                   </div>
                 </div>
