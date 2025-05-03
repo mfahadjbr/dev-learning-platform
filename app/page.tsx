@@ -1,5 +1,8 @@
 "use client"
 
+import { useEffect, useState } from 'react'
+import { useRouter } from 'next/navigation'
+import { getCookie } from 'cookies-next'
 import Header from "@/components/header"
 import HeroSection from "@/components/hero-section"
 import LearningPath from "@/components/learning-path"
@@ -8,7 +11,27 @@ import CourseCarousel from "@/components/course-coursel"
 import ContactForm from "@/components/contact-form"
 import Chatbot from "@/components/chatbot"
 
-export default function Home() {
+export default function HomePage() {
+  const router = useRouter()
+  const [isLoading, setIsLoading] = useState(true)
+
+  useEffect(() => {
+    const token = getCookie('token')
+    if (!token) {
+      router.push('/auth/login')
+    } else {
+      setIsLoading(false)
+    }
+  }, [router])
+
+  if (isLoading) {
+    return (
+      <div className="min-h-screen flex items-center justify-center">
+        <div className="animate-spin rounded-full h-12 w-12 border-t-2 border-b-2 border-blue-500"></div>
+      </div>
+    )
+  }
+
   return (
     <main className="min-h-screen bg-gradient-to-b from-[#0a0118] to-[#1a0b30] text-white overflow-hidden">
       <Header />

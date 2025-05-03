@@ -4,6 +4,8 @@ import Link from "next/link"
 import { Menu, X } from "lucide-react"
 import { Button } from "@/components/ui/button"
 import { useState } from "react"
+import { useRouter } from "next/navigation"
+import { deleteCookie } from "cookies-next"
 
 // Mobile Navigation component
 function MobileNav({ isOpen, setIsOpen }: { isOpen: boolean; setIsOpen: (isOpen: boolean) => void }) {
@@ -47,13 +49,11 @@ function MobileNav({ isOpen, setIsOpen }: { isOpen: boolean; setIsOpen: (isOpen:
 // Header component
 export default function Header() {
   const [isOpen, setIsOpen] = useState(false)
+  const router = useRouter()
 
-  // Add logout handler
-  function handleLogout() {
-    if (typeof window !== 'undefined') {
-      localStorage.clear();
-      window.location.href = '/auth/login';
-    }
+  const handleLogout = () => {
+    deleteCookie('token')
+    router.push('/auth/login')
   }
 
   return (

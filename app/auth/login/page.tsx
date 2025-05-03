@@ -1,23 +1,26 @@
 "use client"
 
 import type React from "react"
-
+import { Suspense } from "react"
 import Link from "next/link"
 import { useState } from "react"
 import { Button } from "@/components/ui/button"
 import { Input } from "@/components/ui/input"
 import { Eye, EyeOff } from "lucide-react"
 import AuthBackground from "@/components/auth-background"
-import { useRouter } from "next/navigation"
+import { useRouter, useSearchParams } from "next/navigation"
 import { toast } from "sonner"
 import Loader from "@/components/Loader"
+import { setCookie } from 'cookies-next'
 
-export default function LoginPage() {
+function LoginForm() {
   const [email, setEmail] = useState("")
   const [password, setPassword] = useState("")
   const [showPassword, setShowPassword] = useState(false)
   const [isSubmitting, setIsSubmitting] = useState(false)
   const router = useRouter()
+  const searchParams = useSearchParams()
+  const from = searchParams.get('from') || '/'
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault()
@@ -48,11 +51,18 @@ export default function LoginPage() {
         return
       }
 
+      const data = await response.json()
+      // Store the token in cookies
+      setCookie('token', data.token, {
+        maxAge: 30 * 24 * 60 * 60, // 30 days
+        path: '/',
+      })
+
       toast.success("Login successful!")
       setEmail("")
       setPassword("")
       setTimeout(() => {
-        router.push("/")
+        router.push(from)
         setIsSubmitting(false)
       }, 1500)
     } catch (error: any) {
@@ -148,5 +158,15 @@ export default function LoginPage() {
         </p>
       </div>
     </div>
+  )
+}
+
+export default function LoginPage() {
+  return (
+    <Suspense fallback={<div className="min-h-screen flex items-center justify-center">
+      <div className="animate-spin rounded-full h-12 w-12 border-t-2 border-b-2 border-blue-500"></div>
+    </div>}>
+      <LoginForm />
+    </Suspense>
   )
 }
